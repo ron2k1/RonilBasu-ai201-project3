@@ -28,3 +28,7 @@ Thumbs.db
 # NOTE: results.json, results_three_seeds.json and baseline_results.json are
 # deliberately NOT ignored. They're evidence the run actually happened, and
 # they're part of what gets graded. Commit them.
+
+# Raw scraped HTML and the unlabelled candidate pool. Rebuildable with
+# tools/harvest_nba.py, and full of usernames, so it never gets committed.
+.harvest/
