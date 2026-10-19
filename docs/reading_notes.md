@@ -63,6 +63,12 @@ second line needs a written decision rule (see the README's Label Taxonomy).
 Distinction 4 didn't earn its own label: most of those posts aren't asking anyone to
 accept a position about basketball, so they're `banter`.
 
+A later correction to distinction 3: `p0426` is about Carson Wentz, an NFL
+quarterback. It still shows the sarcasm problem, but under the scope line
+added to the taxonomy in Milestone 4 (only basketball positions count), it
+would be `banter`. The README's example for the tone-vs-content boundary is
+`p0454`, which is about basketball.
+
 One more thing the reading turned up and the taxonomy deliberately leaves out:
 a few comments are only a question ("what's the meatball sub story"). They
 aren't analysis, a take, or banter, and there are too few for a label of their
