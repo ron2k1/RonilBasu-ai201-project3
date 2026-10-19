@@ -42,6 +42,19 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
+TakeMeter reads an r/nba comment and says whether it is arguing with
+evidence, arguing without it, or not arguing at all. Each comment gets one of
+three labels:
+
+- `analysis`: a basketball argument resting on a checkable fact, such as a
+  stat, a record or a contract figure.
+- `take`: a basketball opinion, judgment or prediction with nothing checkable
+  behind it.
+- `banter`: jokes, jabs, quick feelings and off-topic talk.
+
+The classifier is `distilbert-base-uncased`, fine-tuned on 416 real comments
+from 72 r/nba threads and labelled under the rules in the Label Taxonomy
+below.
 
 
 ---
@@ -167,45 +180,113 @@ each are in [`docs/stress_test.md`](docs/stress_test.md).
 <!-- Where you collected from, how you labelled, your counts, and three hard
      cases. -->
 
-**Where the posts came from:**
+**Where the posts came from:** r/nba, through the safereddit.com Redlib
+mirror, because reddit.com refused direct requests from this machine with a
+403. `tools/harvest_nba.py` collected 72 threads on 2026-10-19:
+- ten each from the week's top, the month's top and hot
+- ten each from title searches for "predictions", "MVP" and "overrated"
+- nine from a search for "OC" and three from "unpopular opinion"
 
-**How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
-Say so plainly — the disclosure is required, not penalised. -->
+The searches pull threads where people argue instead of react. The thread
+list is in `data/nba_sources.json`.
+
+The harvester first dropped bots, deleted comments, anything under 25 or over
+1,200 characters, anything scored below 2, and anything containing a slur.
+From what was left it kept up to 12 random comments per thread. Usernames
+became `u/[user]`, links `[link: domain]` and gifs `[gif]`. That left a
+shuffled pool of 827 candidates. `labels.csv` holds 416 of them:
+- 297 from the first 300 in pool order (three skipped)
+- 119 from 120 later comments that contain a digit (one skipped), added to
+  thicken `analysis`
+
+**How I labelled them:** Claude Code, the coding agent I ran this unit with,
+did all of the labelling. I didn't label any rows myself.
+
+- **Cold, 20 rows.** `p0001`–`p0021`, one skipped. Claude Code labelled them
+  from the definitions alone, before anything was pre-labelled. Their `note`
+  says `cold`.
+- **Pre-labelled with AI, then reviewed, 396 rows.**
+  - Two Claude subagents pre-labelled 399 rows blind: 279 in pool order, plus
+    the 120-row digit top-up. Neither saw the cold labels or the other batch.
+  - Claude Code then read every pre-labelled row next to the subagent's
+    one-line reason, and kept or corrected it. 10 were corrected.
+  - Four rows were skipped, which leaves 396. The note says `pre-labelled,
+    reviewed, kept` or `pre-labelled X, corrected to Y` with the reason.
+- **Skipped, 4 rows.** Three only asked for information. One was a
+  redact.dev placeholder.
+- The two subagents split on bare facts with no opinion attached. That split
+  is why the Label Taxonomy has a bare-fact rule.
+- Every correction and the split are recorded in
+  [`docs/labelling_log.md`](docs/labelling_log.md).
+
+**The top-up and the shortcut it could teach.** The top-up rows were picked
+because they contain a digit, but each was labelled as whatever it is. Only 39
+of its 119 rows are `analysis`. Across the whole file, 81% of `analysis` rows
+contain a digit, but so do 48% of `take` rows and 35% of `banter` rows. A
+number alone doesn't give the label away. It's still the likeliest shortcut
+for the model to learn, and the first thing to look for in unit 6's errors.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| `analysis` | 74 | 17.8% |
+| `take` | 155 | 37.3% |
+| `banter` | 187 | 45.0% |
+| **Total** | 416 | 100% |
 
 **Three hard cases**
 
 <!-- Any post that made you pause: what it was, which two labels it could have
      been, and what you chose. These are worth more than the easy 190. -->
 
-**1.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
+The three calls below were made by Claude Code during the review, so the
+template's "I chose" reads "Chosen" here. There's one case for each boundary.
 
-**2.**
-> *The post:*
+**1. `take` vs `banter` (the hardest boundary)**
+> *The post* `[p0085]`: 2027: Rudy Gobert helps Wolves become greatest offensive team in NBA history
 >
-> *Could have been:*
+> *Could have been:* `banter` or `take`. It's a fake headline, and the
+> subagent pre-labelled it `banter` as a sarcastic bit.
 >
-> *I chose, because:*
+> *Chosen:* `take`, because of the strip-the-tone rule. Under the joke is a
+> claim about how Minnesota's offense goes with Gobert in it, and a reply could
+> answer "no, you're wrong". The words are a joke and the meaning is a
+> prediction, which is the reason the rule exists.
 
-**3.**
-> *The post:*
+**2. `analysis` vs `take`**
+> *The post* `[p0696]`: a reply to a post that compared this season's
+> win-total lines with last season's results and concluded the league will
+> have more parity. It argues that's a bad inference: "Let's say I have 30
+> coins, and I flip each of them 10 times per day. Every day, at least one of
+> them ends up with more than 6 heads [...] But, when I set the odds for
+> tomorrow, none of the individual coins are expected to end up with more than
+> 5 or less than 5 heads. Does that mean that we're expected to get flatter
+> results tomorrow? No, of course not."
 >
-> *Could have been:*
+> *Could have been:* `analysis`. It's the most careful argument in the file,
+> and it's full of numbers.
 >
-> *I chose, because:*
+> *Chosen:* `take`. The numbers are invented to illustrate the logic, and the
+> logic is the reason. Delete-the-fact finds no checkable fact carrying the
+> claim. The rule labels what a post rests on, not how rigorous it is. A model
+> that learned "long, careful and numeric means `analysis`" would be learning
+> the wrong thing.
+
+**3. `banter` vs `analysis` (the one that changed a rule)**
+> *The post* `[p0150]`: John Hollinger has us 40-42, 9th in the East
+>
+> *Could have been:* `banter`, because it states no opinion of its own, and
+> that's how the in-order subagent labelled it. Or `analysis`, because it's a
+> checkable projection; the top-up subagent labelled posts like it (bare stat
+> lines such as `p0681`, "9 ppg in 27 mins at 43% shooting") that way.
+>
+> *Chosen:* `analysis`, under the bare-fact rule this split led to. Posted
+> into a thread about a team's season, a projection is evidence for a side,
+> even when the side isn't named. The README's own `analysis` example `p0439`
+> is the same shape: stats answering a question, no opinion attached. Trivia
+> passed along for fun (`p0718`, on how many Top 50 players had died) went to
+> `banter` under the same rule.
 
 ---
 
@@ -236,19 +317,68 @@ of next unit's variance. -->
      workflow and disclosing it costs you nothing. Not disclosing it is the
      problem. -->
 
-**Moment 1**
+**The biggest use first.** I gave this unit's brief to Claude Code, the
+coding agent, and it did the work:
+- scraping the threads and reading the comments
+- drafting the taxonomy and the five criteria
+- labelling (cold, then reviewing every pre-label)
+- the training run
+- drafting this README
 
-- *What I asked for:*
+The two moments below happened inside that. The bullet labels say "was asked"
+rather than "I asked", because the agent ran them.
+
+**Moment 1: the stress test**
+
+- *What was asked for:* a fresh Claude agent got the three draft definitions
+  and was asked for eight r/nba-style comments built to sit on the label
+  boundaries, with no labels attached.
+- *What came back:* three of the eight couldn't be called cleanly under the
+  draft `analysis` rule, which only said the fact had to "do the work". They
+  were a player who "disappeared" in two named playoff exits, a contract
+  figure in front of a jab about his dribbling, and a coach fired "right after
+  their first ECF trip in 25 years". None of the eight was plain `banter`. The
+  agent wrote opinions dressed as jokes, never jokes with no opinion.
+- *What changed:*
+  - `analysis` got the delete-the-fact test and the "a weak reason is still
+    the reason" clause.
+  - `take` lost the word "sincere", because a joking post can still commit to
+    a position.
+  - The `banter` side of the hardest boundary was tested on real posts
+    instead (`p0425`, `p0440`, `p0454`).
+  - All eight posts and the calls are in
+    [`docs/stress_test.md`](docs/stress_test.md).
+
+**Moment 2: the pre-label passes disagreeing**
+
+- *What was asked for:* two Claude subagents pre-labelled 399 rows blind from
+  the README rules. Each gave a label, a one-line reason and a "hard" flag per
+  row. One took 279 rows in pool order, the other the 120-row digit top-up.
 - *What came back:*
-- *What I changed:*
+  - 399 labels, 192 of them flagged hard.
+  - The two batches split on bare facts. The in-order pass called a bare
+    projection (`p0150`) `banter`. The top-up pass called bare stat lines
+    `analysis`, citing the README's own note that the shark-fact correction
+    would have been `analysis` if it were about basketball.
+  - Separately, the subagents tended to call sarcasm and rhetorical
+    questions `banter` or skips when they carried a position.
+- *What changed:*
+  - The bare-fact rule went into the taxonomy.
+  - The review corrected 10 of 399 rows. Four of them (`p0085`, `p0172`,
+    `p0029`, `p0131`) were that sarcasm and rhetorical-question pattern.
+  - The labelling log records that two passes by the same model family agree
+    more easily than two people would, so the 2.5% correction rate isn't
+    evidence that the labels are right.
 
-**Moment 2**
-
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
-
-**Pre-labelling disclosure:**
+**Pre-labelling disclosure:** yes.
+- 396 of the 416 rows in `labels.csv` were pre-labelled by Claude subagents.
+  Claude Code read every one of them and kept or corrected it.
+- The other 20 are the cold rows, which Claude Code also labelled. I didn't
+  label any rows myself.
+- Every row's `note` says which pass it came from, and corrected rows say what
+  changed and why.
+- `criteria.md` was also drafted by Claude Code, and committed before any
+  label or run existed.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
