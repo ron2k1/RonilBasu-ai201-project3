@@ -109,20 +109,28 @@ the Ben Simmons Achilles thread:
 It reads as a reaction. It also blames the injury wave on how hard players are
 worked from a young age, which is something you could argue against.
 
-**The decision rule I used every time:** strip the tone and ask what a reply
+**The decision rule, applied to every row:** strip the tone and ask what a reply
 could disagree with. If the post commits to a position about players, teams or
 the league that someone could answer with "no, you're wrong", it's `take`,
 even when it's sarcastic, joking or furious. If the only things left to answer
 are the joke or the feeling itself, it's `banter`. Under this rule `p0454` is
 a `take`.
 
-**Two more rules, for the other boundaries:**
+**Three more rules, for the other boundaries:**
 
 - **`analysis` vs `take`: delete the fact.** If the claim is left with no
   reason, the fact was carrying it, so it's `analysis`. If the post still makes
   the same point just as hard (the fact only set the scene, or set up a joke),
   it's `take`. Whether the fact is a *good* reason doesn't matter. The label
   records what the post does, not whether it's right.
+- **A post that is only a basketball fact** (a stat line, a record, a result,
+  a contract figure, a projection) and argues nothing out loud is `analysis`.
+  Posted into a thread, a bare number is evidence for one side even when the
+  side isn't named. The `analysis` example `p0439` is exactly that: a list of
+  stats answering a question. Trivia or a quote passed along for fun, with
+  nothing it could be evidence for, is `banter`. This rule was added while the
+  pre-labels were being reviewed, because the two blind pre-label passes split
+  on it (see The Dataset).
 - **A post doing two things** gets the label for the one it spends most of its
   words on. This is a tie-break, used only after the rules above.
 
