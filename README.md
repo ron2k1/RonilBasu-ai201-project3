@@ -56,7 +56,7 @@
 
 Three labels, and two questions that sort every post into one of them:
 
-1. **Does the post commit to a position someone could argue with?** No: `banter`.
+1. **Does the post commit to a basketball position someone could argue with?** No: `banter`.
 2. **If it does, does it offer a checkable fact as the reason?** Yes: `analysis`. No: `take`.
 
 The examples below are real r/nba comments from the reading in Milestone 1
@@ -64,9 +64,9 @@ The examples below are real r/nba comments from the reading in Milestone 1
 
 ### `analysis`
 
-**Definition:** an argument that offers a specific, checkable fact as its
-reason: a stat, a record, a date, a named game or play, a contract figure, or
-a quote.
+**Definition:** a basketball argument that offers a specific, checkable fact
+as its reason: a stat, a record, a date, a named game or play, a contract
+figure, or a quote.
 
 **Example 1** `[p0439]`:
 > Closest I can find is 2022 1st round vs ATL where he was 1st in PTS (122), 2nd in REB (31), 2nd in AST (21), 1st in STL (11), 3rd in BLK (2). His other closest series was ironically against LeBron, in the 2020 Finals: 2nd in PTS (157), 3rd in REB (50), 1st in AST (59), 1st in STL (13), 2nd in BLK (5).
@@ -76,8 +76,8 @@ a quote.
 
 ### `take`
 
-**Definition:** an opinion, judgment or prediction that someone could argue
-with, offered without a checkable fact as its reason.
+**Definition:** an opinion, judgment or prediction about basketball that
+someone could argue with, offered without a checkable fact as its reason.
 
 **Example 1** `[p0402]`:
 > It never made sense to me to keep him over Cisse
@@ -87,8 +87,9 @@ with, offered without a checkable fact as its reason.
 
 ### `banter`
 
-**Definition:** a joke, a bit, a jab or a quick feeling that doesn't commit
-to any position someone could argue with.
+**Definition:** a joke, a bit, a jab, a quick feeling, or talk about
+something other than basketball: anything that doesn't commit to a basketball
+position someone could argue with.
 
 **Example 1** `[p0425]`, on the Ben Simmons injury thread:
 > Grand opening , grand closing
@@ -125,9 +126,20 @@ a `take`.
 - **A post doing two things** gets the label for the one it spends most of its
   words on. This is a tie-break, used only after the rules above.
 
+**What counts as basketball:** players, teams, coaches, refs, front offices,
+contracts, the league and its business, and the media and fans that cover it.
+An opinion about shawarma in a Raptors thread is `banter`. This scope line was
+added after the first cold rows were read and before any were labelled: rows
+`p0006` and `p0007` argue about which city has better shawarma, and `p0018`
+corrects someone about hammerhead sharks with a fact. Under the unscoped
+definitions those were a `take` and an `analysis`, which would have taught the
+model that trivia corrections are basketball analysis.
+
 **What sits outside the taxonomy:** a post that only asks for information
-("what's the meatball sub story") is none of the three. Those are skipped at
-labelling time and counted under The Dataset.
+("what's the meatball sub story") is none of the three, and neither is a
+comment whose text was wiped by a privacy tool (`p0019` is a redact.dev
+placeholder followed by random words). Both are skipped at labelling time and
+counted under The Dataset.
 
 **The stress test.** Before labelling, a separate Claude agent was given these
 definitions and asked for eight r/nba-style comments built to sit on the

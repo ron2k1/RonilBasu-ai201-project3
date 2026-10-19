@@ -2,6 +2,6 @@
 # Taxonomy. baseline.py reads this file and slots each definition into the
 # hypothesis "This post is {}.", which is why each one is a noun phrase.
 
-analysis: an argument that offers a specific, checkable fact as its reason: a stat, a record, a date, a named game or play, a contract figure, or a quote
-take: an opinion, judgment or prediction that someone could argue with, offered without a checkable fact as its reason
-banter: a joke, a bit, a jab or a quick feeling that doesn't commit to any position someone could argue with
+analysis: a basketball argument that offers a specific, checkable fact as its reason: a stat, a record, a date, a named game or play, a contract figure, or a quote
+take: an opinion, judgment or prediction about basketball that someone could argue with, offered without a checkable fact as its reason
+banter: a joke, a bit, a jab, a quick feeling, or talk about something other than basketball: anything that doesn't commit to a basketball position someone could argue with
