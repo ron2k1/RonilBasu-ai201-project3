@@ -54,3 +54,16 @@ point at, not "good vs. bad".
    basketball.** `p0427` ("Damn you can't read at all, huh?"), `p0410`
    (sarcasm aimed at other commenters), `p0431` ("How do the boots taste down
    there?"). They're about the conversation, not the sport.
+
+## Where the distinctions went
+
+Distinction 1 became the line between `analysis` and `take`. Distinction 2
+became the line between `take` and `banter`. Distinction 3 is the reason that
+second line needs a written decision rule (see the README's Label Taxonomy).
+Distinction 4 didn't earn its own label: most of those posts aren't asking anyone to
+accept a position about basketball, so they're `banter`.
+
+One more thing the reading turned up and the taxonomy deliberately leaves out:
+a few comments are only a question ("what's the meatball sub story"). They
+aren't analysis, a take, or banter, and there are too few for a label of their
+own. They're skipped at labelling time and the skips are counted in the README.
