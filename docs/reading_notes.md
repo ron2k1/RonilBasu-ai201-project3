@@ -12,7 +12,8 @@ comment that lists a player's series ranks stat by stat, a sincere one-line
 verdict on a trade, and three jokes about a running bit, all within a scroll.
 It isn't built around one show or one release, so nothing in it is a spoiler.
 
-The comments came from 72 threads collected on 2026-10-19, the week before
+The comments came from 72 threads collected on 2026-10-19 (69 of them had a
+comment that passed the harvester's filters), the week before
 the 2026-27 season opens. They span clips, injury news, interviews, `[OC]` stat
 posts and prediction threads (`tools/harvest_nba.py`, thread list in
 `data/nba_sources.json`). Each comment is one "post" for this project.

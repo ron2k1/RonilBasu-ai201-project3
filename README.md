@@ -53,7 +53,7 @@ three labels:
 - `banter`: jokes, jabs, quick feelings and off-topic talk.
 
 The classifier is `distilbert-base-uncased`, fine-tuned on 416 real comments
-from 72 r/nba threads and labelled under the rules in the Label Taxonomy
+from 69 r/nba threads and labelled under the rules in the Label Taxonomy
 below.
 
 
@@ -194,7 +194,8 @@ The harvester first dropped bots, deleted comments, anything under 25 or over
 1,200 characters, anything scored below 2, and anything containing a slur.
 From what was left it kept up to 12 random comments per thread. Usernames
 became `u/[user]`, links `[link: domain]` and gifs `[gif]`. That left a
-shuffled pool of 827 candidates. `labels.csv` holds 416 of them:
+shuffled pool of 827 candidates from 69 of the 72 threads. The other three
+had no comment that passed the filters. `labels.csv` holds 416 of them:
 - 297 from the first 300 in pool order (three skipped)
 - 119 from 120 later comments that contain a digit (one skipped), added to
   thicken `analysis`
@@ -210,10 +211,12 @@ did all of the labelling. I didn't label any rows myself.
     the 120-row digit top-up. Neither saw the cold labels or the other batch.
   - Claude Code then read every pre-labelled row next to the subagent's
     one-line reason, and kept or corrected it. 10 were corrected.
-  - Four rows were skipped, which leaves 396. The note says `pre-labelled,
-    reviewed, kept` or `pre-labelled X, corrected to Y` with the reason.
-- **Skipped, 4 rows.** Three only asked for information. One was a
-  redact.dev placeholder.
+  - Three of them were skipped, which leaves 396. The note says
+    `pre-labelled, reviewed, kept` or `pre-labelled X, corrected to Y` with
+    the reason.
+- **Skipped, 4 rows.** Three pre-labelled rows were skipped as questions.
+  One of them, `p0080`, is borderline (see the labelling log). One
+  cold-range row, `p0019`, was a redact.dev placeholder.
 - The two subagents split on bare facts with no opinion attached. That split
   is why the Label Taxonomy has a bare-fact rule.
 - Every correction and the split are recorded in

@@ -57,7 +57,8 @@ for fun is `banter`. The rows on both sides were re-checked against the rule.
 
 | Reason | Rows |
 |---|---|
-| Only asks for information | `p0080`, `p0201`, `p0498` |
+| Only asks for information | `p0201`, `p0498` |
+| Wonders aloud and asks the poster for more ("We need more insight, OP!"). Skipped as a question. Under the decision rule it could have been `banter` | `p0080` |
 | Text wiped by redact.dev | `p0019` |
 
 ## What the low correction rate does and doesn't mean
