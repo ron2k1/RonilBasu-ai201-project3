@@ -331,6 +331,11 @@ No label fell under 8 in the test split, so the notebook printed no `[note]`.
 `analysis` comes closest with 11: one post changing sides moves its recall by
 9 points, so expect its F1 to swing between seeds.
 
+`criteria.md` was filed expecting about 240 posts: about 165 to train on and
+a test split of about 36, with about 8 `analysis` posts in it. The set grew to
+416, so the real numbers are 290, 63 and 11. The targets weren't changed.
+Only the arithmetic in their reasons is now out of date.
+
 The run's metrics are in `results.json`. They're read in unit 6, against
 the criteria filed before the run.
 
