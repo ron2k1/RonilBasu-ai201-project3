@@ -19,8 +19,12 @@
    - **Batch A, in pool order:** `p0022`–`p0300`, 279 rows. This is the
      community's natural mix.
    - **Batch B, the analysis top-up:** every comment from `p0301` onward that
-     contains a digit, 120 rows. `p0401`–`p0460` were left out because that's
-     the Milestone 1 reading range and where the README's examples come from.
+     contains a digit, 120 rows. `p0401`–`p0460` were left out: that's the
+     Milestone 1 reading and the part of the Milestone 2 reading the README's
+     examples come from. The Milestone 2 reading ran on to `p0480`, so two
+     rows in this batch, `p0464` and `p0474`, had been read once before they
+     were pre-labelled. The subagent hadn't seen them. Claude Code, which
+     reviewed them, had.
      The batch was picked to add `analysis`, but every row in it was labelled as
      whatever it is. Most of the 120 came out `take` or `banter`.
 3. **Review of every pre-labelled row.** Claude Code read each of the 399

@@ -25,6 +25,11 @@ existed. They were taken from the middle of the shuffled pool on purpose: the
 first rows of the pool become the 20 cold labels in Milestone 4, and those
 should be read for the first time when they're labelled.
 
+A second pass read the next 40, `p0441` to `p0480`, before the Milestone 2
+definitions were written. Three of the README's examples come from that pass (`p0451`,
+`p0454`, `p0460`). That makes 80 comments read before labelling, the figure
+`criteria.md` uses.
+
 ## Candidate distinctions
 
 Four things the comments actually did differently. Each one is a thing you can

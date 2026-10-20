@@ -72,8 +72,8 @@ Three labels, and two questions that sort every post into one of them:
 1. **Does the post commit to a basketball position someone could argue with?** No: `banter`.
 2. **If it does, does it offer a checkable fact as the reason?** Yes: `analysis`. No: `take`.
 
-The examples below are real r/nba comments from the reading in Milestone 1
-(pool ids in brackets, text exactly as collected).
+The examples below are real r/nba comments from the 80 read for Milestones 1
+and 2, `p0401`–`p0480` (pool ids in brackets, text exactly as collected).
 
 ### `analysis`
 
@@ -117,7 +117,7 @@ jokes, sarcasm or swearing, so the tone of a post and its content point at
 different labels all the time. This is the post that showed it `[p0454]`, from
 the Ben Simmons Achilles thread:
 
-> Which is fucking insane man. Something isn't right. Idk if it's the shoes or that basketball has become way too demanding from a very young age, but these guys simply can't keep up anymore. Their bodies are literally ripping
+> Which is fucking insane man. Something isn’t right. Idk if it’s the shoes or that basketball has become way too demanding from a very young age, but these guys simply can’t keep up anymore. Their bodies are literally ripping
 
 It reads as a reaction. It also blames the injury wave on how hard players are
 worked from a young age, which is something you could argue against.
