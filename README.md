@@ -294,15 +294,42 @@ template's "I chose" reads "Chosen" here. There's one case for each boundary.
 
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
-**Base model:**
+**Base model:** `distilbert-base-uncased`, the notebook's default, with a
+three-label classification head (`analysis`, `take`, `banter`).
 
-**Settings:** <!-- epochs, learning rate, batch size, seed -->
+**Settings:** 3 epochs, learning rate 2e-5, batch size 16, seed 42,
+`MAX_LENGTH` 128.
 
-**Anything I changed from the defaults, and why:**
+**Device:** `cpu` (torch 2.14.1+cpu). The laptop has an RTX 4060, but
+`requirements.txt` asks for plain `torch`, and the default PyPI build on
+Windows is CPU-only. The notebook's device check found no GPU it could use.
+Sections 1 to 5 ran in about three minutes.
 
-**Split sizes:** <!-- train / val / test, and per-label counts in the test
-split. If a label had fewer than about 8 in test, say so — it explains a lot
-of next unit's variance. -->
+**Anything I changed from the defaults, and why:** Nothing. Every setting
+above is the notebook default.
+- `MAX_LENGTH` was the one worth checking. 20 of the 416 posts run past 128
+  DistilBERT tokens and get cut: 11 `take`, 5 `banter`, 4 `analysis`. The
+  median post is 28 tokens and the longest is 237. Doubling the limit to save
+  5% of posts would roughly double the cost, because every post is padded up
+  to the limit, not only the long ones.
+- The rest stay at their defaults so that unit 6's three seeds measure this
+  setup. Any change belongs in The Improvement, after the baseline comparison.
+
+**Split sizes:** stratified 70/15/15 on seed 42.
+
+| Label | Train | Val | Test |
+|---|---|---|---|
+| `analysis` | 52 | 11 | 11 |
+| `take` | 107 | 24 | 24 |
+| `banter` | 131 | 28 | 28 |
+| **Total** | 290 | 63 | 63 |
+
+No label fell under 8 in the test split, so the notebook printed no `[note]`.
+`analysis` comes closest with 11: one post changing sides moves its recall by
+9 points, so expect its F1 to swing between seeds.
+
+The run's metrics are in `results.json`. They're read in unit 6, against
+the criteria filed before the run.
 
 
 
